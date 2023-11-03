@@ -1,2 +1,2 @@
 # LoginSample
- weekend 2 project
+ weekend project
