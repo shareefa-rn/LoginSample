@@ -10,7 +10,7 @@ import {
 import {useAuthHelper} from '../contextApi/AuthHelper';
 
 const LoginScreen = ({navigation}) => {
-  const {authHelper} = useAuthHelper();
+  const {login} = useAuthHelper();
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -65,7 +65,7 @@ const LoginScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            authHelper(email, password);
+            login(email, password);
             navigation.navigate('Home');
 
             //  Alert.alert(`User ${userName} is log in with password ${password}`);
