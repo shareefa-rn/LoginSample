@@ -9,10 +9,12 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
-import {useAuthHelper} from '../contextApi/AuthHelper';
+import {EventRegister} from 'react-native-event-listeners';
+import {useNavigation} from '@react-navigation/native';
+import {StackActions} from '@react-navigation/native';
 
 export default function HomeScreen() {
-  const {logout} = useAuthHelper();
+  const navigation = useNavigation();
 
   const [data, setData] = useState([]);
 
@@ -74,8 +76,8 @@ export default function HomeScreen() {
         <TouchableOpacity
           style={styles.textInuput}
           onPress={() => {
-            logout;
-            navigation.navigate('Login');
+            navigation.dispatch(StackActions.popToTop());
+            EventRegister.emit('loginevent');
             console.log('logout clicked');
           }}>
           <Text style={styles.text}>Logout</Text>

@@ -8,6 +8,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {useAuthHelper} from '../contextApi/AuthHelper';
+import {EventRegister} from 'react-native-event-listeners';
 
 const LoginScreen = ({navigation}) => {
   const {login} = useAuthHelper();
@@ -66,8 +67,8 @@ const LoginScreen = ({navigation}) => {
           style={styles.button}
           onPress={() => {
             login(email, password);
+            EventRegister.emit('loginEvent');
             navigation.navigate('Home');
-
             //  Alert.alert(`User ${userName} is log in with password ${password}`);
           }}>
           <Text>Login</Text>
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     paddingHorizontal: 10,
   },
+
   button: {
     padding: 10,
     borderColor: '#bee6fe',
