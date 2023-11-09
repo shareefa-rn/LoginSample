@@ -82,6 +82,14 @@ export default function HomeScreen() {
           }}>
           <Text style={styles.text}>Logout</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.textInuput}
+          onPress={() => {
+            navigation.navigate('Redux');
+            console.log('Redux Test clicked');
+          }}>
+          <Text style={styles.text}>Redux Test</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
