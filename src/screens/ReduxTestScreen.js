@@ -1,6 +1,10 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {increment, decrement} from '../features/counter/counterSlice';
+import {
+  increment,
+  decrement,
+  incrementByAmount,
+} from '../features/counter/counterSlice';
 import {View, Text, Button, SafeAreaView} from 'react-native';
 
 export function ReduxTestScreen() {
@@ -20,6 +24,12 @@ export function ReduxTestScreen() {
           title={'Decrement'}
           onPress={() => {
             dispatch(decrement());
+          }}
+        />
+        <Button
+          title={'Increment by value'}
+          onPress={() => {
+            dispatch(incrementByAmount(5));
           }}
         />
         <Text>{count}</Text>
