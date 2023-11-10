@@ -19,36 +19,43 @@ import {addToCart} from '../features/cart/cartSlice';
 
 const itemList = [
   {
+    id: 101,
     image: require('../../assets/laptops/laptop_1.jpg'),
     name: 'Macbook',
     details: 'Macbook pro with M3',
     price: 2500,
   },
   {
+    id: 102,
     image: require('../../assets/laptops/laptop_2.jpg'),
     name: 'iPhone',
     details: 'iPhone 15 pro',
     price: 1500,
   },
   {
+    id: 103,
     image: require('../../assets/laptops/laptop_3.jpg'),
     name: 'iPad',
     details: 'Sleek and smart',
     price: 800,
   },
   {
+    id: 104,
     image: require('../../assets/laptops/laptop_4.jpg'),
     name: 'Tripod',
     details: 'something details',
     price: 50,
   },
   {
+    id: 105,
     image: require('../../assets/laptops/laptop_5.jpg'),
     name: 'Newtonian Telescope',
     details: '13 inch',
     price: 500,
   },
   {
+    id: 106,
+
     image: require('../../assets/laptops/laptop_1.jpg'),
     name: 'LED',
     details: '5w',
