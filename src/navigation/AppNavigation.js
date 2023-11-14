@@ -8,10 +8,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import StackNavScreen from '../StackNavScreen';
-import store from '../screens/Store';
+import store from '../features/Store';
 import {Provider} from 'react-redux';
 import {ReduxTestScreen} from '../screens/ReduxTestScreen';
 import CartScreen from '../screens/CartScreen';
+import ItemListScreen from '../screens/ItemListScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 
 const Stack = createNativeStackNavigator();
 const defaultOptionsForStack = {
@@ -39,6 +41,16 @@ function AppNavigation() {
             name="Home"
             options={{headerShown: true}}
             component={HomeScreen}
+          />
+          <Stack.Screen
+            name="itemlist"
+            options={{headerShown: true}}
+            component={ItemListScreen}
+          />
+          <Stack.Screen
+            name="signup"
+            options={{headerShown: true}}
+            component={SignUpScreen}
           />
           <Stack.Screen
             name="Login"

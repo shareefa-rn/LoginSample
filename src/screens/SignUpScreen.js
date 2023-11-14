@@ -2,33 +2,26 @@ import React, {useState} from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  TextInput,
   SafeAreaView,
-  Button,
-  ActivityIndicator,
+  TextInput,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import {useAuthHelper} from '../contextApi/AuthHelper';
-import {EventRegister} from 'react-native-event-listeners';
-import ApiHelper from '../helpers/ApiHelper';
-import {kApiUserLogin} from '../config/WebService';
-import {useDispatch, useSelector} from 'react-redux';
-import {userActions} from '../features/user/userSlice';
 import styles from './styles';
+import {kApiUserLogin, kApiUserSignup} from '../config/WebService';
+import {useDispatch} from 'react-redux';
+import ApiHelper from '../helpers/ApiHelper';
+import {userActions} from '../features/user/userSlice';
 
 const {request, success, failure} = userActions;
 
-const LoginScreen = ({navigation}) => {
+export default function SignUpScreen() {
   const dispatch = useDispatch();
-  const {login} = useAuthHelper();
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
   });
   const {email, password} = credentials;
-
-  const user = useSelector(state => state.user);
-
   const handleOnChnage = (text, input) => {
     setCredentials(prevState => ({
       ...prevState,
@@ -36,30 +29,10 @@ const LoginScreen = ({navigation}) => {
     }));
   };
 
-  const loginUser = () => {
-    //  setLoading(true);
-    setTimeout(async () => {
-      //  setLoading(false);
-      console.log('inputs====>', credentials);
-
-      try {
-        setInputs({
-          email: '',
-          password: '',
-        });
-        //  setErrors({});
-        console.log('navigating to home');
-      } catch (error) {
-        console.log('Error to home');
-
-        Alert.alert('Error', 'Invalid Details');
-      }
-    }, 3000);
-  };
   return (
     <SafeAreaView
       style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-      <Text style={styles.text}>Login Screen</Text>
+      <Text style={styles.text}>Signup Screen</Text>
 
       <View style={styles.container}>
         <View>
@@ -85,34 +58,24 @@ const LoginScreen = ({navigation}) => {
             // PersistanceHelper.setObject('loginDetails', {username, password});
             dispatch(request({email, password}));
             console.log('navigating to login==' + email + password);
-
             try {
-              const response = await ApiHelper.post(kApiUserLogin, {
+              const response = await ApiHelper.post(kApiUserSignup, {
                 email,
                 password,
               });
               dispatch(success(response));
-              navigation.navigate('itemlist');
-
+              Alert.alert('Successfully signup');
               console.log('Api helper to success==' + response.success);
             } catch (error) {
               console.log('Api helper to error==' + error);
+              Alert.alert('Error while signup');
 
               dispatch(failure(error));
             }
           }}>
-          <Text style={styles.text}>Login</Text>
+          <Text style={styles.text}>Signup</Text>
         </TouchableOpacity>
-        <Button
-          title="Goto Signup"
-          onPress={() => {
-            navigation.navigate('signup');
-          }}
-        />
-        {user.isFetching && <ActivityIndicator />}
       </View>
     </SafeAreaView>
   );
-};
-
-export default LoginScreen;
+}

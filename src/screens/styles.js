@@ -1,6 +1,34 @@
-import {StyleSheet, TextInput} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  input: {
+    height: 40,
+    borderColor: '#e0e0e0',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 5,
+    paddingHorizontal: 10,
+  },
+  button: {
+    padding: 10,
+    borderColor: '#bee6fe',
+    backgroundColor: '#eaf7fd',
+    borderWidth: 1,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    alignSelf: 'stretch',
+    margin: 10,
+    padding: 10,
+    alignContent: 'center',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+  },
+
   touchableText: {
     height: 40,
     marginHorizontal: 10,
@@ -18,7 +46,7 @@ export default StyleSheet.create({
     textAlign: 'left',
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#015169',
     paddingVertical: 5,
