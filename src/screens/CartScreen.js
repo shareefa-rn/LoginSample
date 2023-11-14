@@ -47,7 +47,7 @@ const CartScreen = () => {
                   <Button
                     title={'+'}
                     onPress={() => {
-                      dispatch(increaseQty(item.item));
+                      dispatch(increaseQty(item.id));
                     }}
                   />
                   <Text>{item.quantity}</Text>
@@ -55,7 +55,7 @@ const CartScreen = () => {
                   <Button
                     title={'-'}
                     onPress={() => {
-                      dispatch(decreaseQty(item.item));
+                      dispatch(decreaseQty(item.id));
                     }}
                   />
                 </View>

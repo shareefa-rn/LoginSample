@@ -68,7 +68,7 @@ const LoginScreen = ({navigation}) => {
           onPress={() => {
             login(email, password);
             EventRegister.emit('loginEvent');
-            navigation.navigate('Home');
+            navigation.navigate('Redux');
             //  Alert.alert(`User ${userName} is log in with password ${password}`);
           }}>
           <Text>Login</Text>

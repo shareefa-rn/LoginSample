@@ -1,47 +1,61 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState = {
-  cart: [],
-};
+export const cartSlice = createSlice({
+  name: 'cart',
+  initialState: {
+    cartItems: [],
+  },
+  reducers: {
+    addToCart: (state, action) => {
+      const itemToAdd = action.payload;
 
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'ADD_TO_CART':
-      return {
-        ...state,
-        cart: [...state.cart, {...action.payload, quantity: 1}],
-      };
-    case 'REMOVE_FROM_CART':
-      return {
-        ...state,
-        cart: state.cart.filter(item => item.id !== action.payload),
-      };
-    case 'INCREASE_QUANTITY':
-      return {
-        ...state,
-        cart: state.cart.map(item =>
-          item.id === action.payload
-            ? {...item, quantity: item.quantity + 1}
-            : item,
-        ),
-      };
-    case 'DECREASE_QUANTITY':
-      return {
-        ...state,
-        cart: state.cart.map(item =>
-          item.id === action.payload
-            ? {...item, quantity: Math.max(1, item.quantity - 1)}
-            : item,
-        ),
-      };
-    case 'CLEAR_CART':
-      return {
-        ...state,
-        cart: [],
-      };
-    default:
-      return state;
-  }
-};
+      const itemPresentIndex = state.cartItems.findIndex(
+        thisElement => thisElement.item.id === itemToAdd.id,
+      );
 
-export default rootReducer;
+      if (itemPresentIndex !== -1) {
+        const itemFoundObject = state.cartItems[itemPresentIndex];
+        itemFoundObject.quantity += 1;
+      } else {
+        state.cartItems.push({item: itemToAdd, quantity: 1});
+      }
+    },
+    removeFromCart: (state, action) => {
+      let newCartItems = state.cartItems.filter(
+        item => item.id !== action.item,
+      );
+      let count = state.itemsCount - 1;
+      return {
+        ...state,
+        itemsCount: count,
+        cartItems: newCartItems,
+      };
+    },
+    increaseQty: (state, action) => ({
+      ...state,
+      cartItems: state.cartItems.map(item =>
+        item.id === action.payload
+          ? {...item, quantity: item.quantity + 1}
+          : item,
+      ),
+    }),
+    decreaseQty: (state, action) => ({
+      ...state,
+      cartItems: state.cartItems.map(item =>
+        item.id === action.payload
+          ? {...item, quantity: item.quantity - 1}
+          : item,
+      ),
+    }),
+    clearCart: state => ({
+      ...state,
+      itemsCount: 0,
+      cartItems: [],
+    }),
+  },
+});
+
+export const {addToCart, removeFromCart, clearCart, increaseQty, decreaseQty} =
+  cartSlice.actions;
+
+export default cartSlice.reducer;

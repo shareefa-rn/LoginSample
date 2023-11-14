@@ -55,7 +55,6 @@ const itemList = [
   },
   {
     id: 106,
-
     image: require('../../assets/laptops/laptop_1.jpg'),
     name: 'LED',
     details: '5w',
