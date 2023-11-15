@@ -19,19 +19,10 @@ export default function PostItemScreen() {
 
   const user = useSelector(state => state.user);
 
-  const [postData, setPostData] = useState({
-    title: '',
-    image: '',
-    details: '',
-  });
-  const {title, image, details} = postData;
+  const [title, setTitle] = useState();
+  const [image, setImage] = useState();
+  const [details, setDetails] = useState();
 
-  const handleOnChnage = (text, input) => {
-    setPostData(prevState => ({
-      ...prevState,
-      [input]: text,
-    }));
-  };
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -39,25 +30,24 @@ export default function PostItemScreen() {
           <TextInput
             placeholder="title"
             style={styles.input}
-            onChangeText={ct => handleOnChnage(ct, 'title')}></TextInput>
+            onChangeText={ct => setTitle(ct)}></TextInput>
         </View>
         <View>
           <TextInput
             placeholder="image"
             style={styles.input}
-            onChangeText={ct => handleOnChnage(ct, 'image')}></TextInput>
+            onChangeText={ct => setImage(ct)}></TextInput>
         </View>
         <View>
           <TextInput
             style={styles.input}
             placeholder="details"
-            onChangeText={ct => handleOnChnage(ct, 'details')}></TextInput>
+            onChangeText={ct => setDetails(ct)}></TextInput>
         </View>
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
             dispatch(request());
-
             try {
               const response = await ApiHelper.post(
                 kApiPostItems,
@@ -65,6 +55,9 @@ export default function PostItemScreen() {
                 {'X-Access-Token': user?.data?.accessToken},
               );
               dispatch(success(response));
+              setTitle('');
+              setImage('');
+              setDetails('');
               console.log('Api helper to success==' + response.success);
             } catch (error) {
               console.log('Api helper to error==' + error);

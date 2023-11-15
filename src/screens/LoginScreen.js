@@ -21,20 +21,10 @@ const {request, success, failure} = userActions;
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {login} = useAuthHelper();
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
-  const {email, password} = credentials;
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
   const user = useSelector(state => state.user);
-
-  const handleOnChnage = (text, input) => {
-    setCredentials(prevState => ({
-      ...prevState,
-      [input]: text,
-    }));
-  };
 
   const loginUser = () => {
     //  setLoading(true);
@@ -66,14 +56,14 @@ const LoginScreen = ({navigation}) => {
           <Text style={styles.text}>Email</Text>
           <TextInput
             style={styles.input}
-            onChangeText={ct => handleOnChnage(ct, 'email')}></TextInput>
+            onChangeText={ct => setEmail(ct)}></TextInput>
         </View>
         <View>
           <Text style={styles.text}>Password</Text>
           <TextInput
             secureTextEntry
             style={styles.input}
-            onChangeText={ct => handleOnChnage(ct, 'password')}></TextInput>
+            onChangeText={ct => setPassword(ct)}></TextInput>
         </View>
         <TouchableOpacity
           style={styles.button}
@@ -92,6 +82,8 @@ const LoginScreen = ({navigation}) => {
                 password,
               });
               dispatch(success(response));
+              setEmail('');
+              setPassword('');
               navigation.navigate('itemlist');
 
               console.log('Api helper to success==' + response.success);

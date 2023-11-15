@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {kApiUserLogin, kApiUserSignup} from '../config/WebService';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ApiHelper from '../helpers/ApiHelper';
 import {userActions} from '../features/user/userSlice';
 
@@ -17,17 +17,20 @@ const {request, success, failure} = userActions;
 
 export default function SignUpScreen() {
   const dispatch = useDispatch();
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
-  const {email, password} = credentials;
-  const handleOnChnage = (text, input) => {
-    setCredentials(prevState => ({
-      ...prevState,
-      [input]: text,
-    }));
-  };
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const [errorMsg, setErrorMsg] = useState(undefined);
+  const user = useSelector(state => state.user);
+
+  useEffect(() => {
+    if (user?.errorMessage?.message) {
+      //  Alert.alert('Error', user?.errorMessage?.message);
+      setErrorMsg(user?.errorMessage?.message);
+    } else {
+      setErrorMsg(undefined);
+    }
+  }, [user]);
 
   return (
     <SafeAreaView
@@ -39,23 +42,21 @@ export default function SignUpScreen() {
           <Text style={styles.text}>Email</Text>
           <TextInput
             style={styles.input}
-            onChangeText={ct => handleOnChnage(ct, 'email')}></TextInput>
+            onChangeText={ct => setEmail(ct)}></TextInput>
         </View>
         <View>
           <Text style={styles.text}>Password</Text>
           <TextInput
             secureTextEntry
             style={styles.input}
-            onChangeText={ct => handleOnChnage(ct, 'password')}></TextInput>
+            onChangeText={ct => setPassword(ct)}></TextInput>
         </View>
+        {errorMsg && errorMsg.length > 0 && (
+          <Text style={{color: 'red', marginHorizontal: 20}}>{errorMsg}</Text>
+        )}
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
-            //  login(email, password);
-            //   EventRegister.emit('loginEvent');
-            //   navigation.navigate('Redux');
-            //  Alert.alert(`User ${userName} is log in with password ${password}`);
-            // PersistanceHelper.setObject('loginDetails', {username, password});
             dispatch(request({email, password}));
             console.log('navigating to login==' + email + password);
             try {
@@ -64,11 +65,13 @@ export default function SignUpScreen() {
                 password,
               });
               dispatch(success(response));
+              setEmail('');
+              setPassword('');
               Alert.alert('Successfully signup');
               console.log('Api helper to success==' + response.success);
             } catch (error) {
-              console.log('Api helper to error==' + error);
-              Alert.alert('Error while signup');
+              console.log('Api helper to error==' + error.error);
+              // Alert.alert('' + errorMsg);
 
               dispatch(failure(error));
             }
