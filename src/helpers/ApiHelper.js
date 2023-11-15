@@ -7,6 +7,7 @@ import {
 class ApiHelper {
   get = async (url, data, headers) => {
     url = kApiUrlEndpoint + url;
+    console.log('item url==' + url);
 
     const response = await fetch(url).then(x => x.json());
 
@@ -39,8 +40,6 @@ class ApiHelper {
   delete = () => {};
 
   handlePromise = (resolve, reject, response) => {
-    console.log('Api helper to login res==' + response.code);
-
     if (response.error) {
       if (response.error.code === 'LOGIN_FAILED') {
         reject(ERROR_WRONG_CREDENTIALS);
