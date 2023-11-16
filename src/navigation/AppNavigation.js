@@ -8,29 +8,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import StackNavScreen from '../StackNavScreen';
-import store from '../features/Store';
-import {Provider} from 'react-redux';
 import {ReduxTestScreen} from '../screens/ReduxTestScreen';
 import CartScreen from '../screens/CartScreen';
 import ItemListScreen from '../screens/ItemListScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import {Provider} from 'react-redux';
+import {store} from '../store';
 
 const Stack = createNativeStackNavigator();
-const defaultOptionsForStack = {
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#FF543C',
-      elevation: 0,
-      shadowOpacity: 0,
-    },
-    headerTintColor: '#FFFFFF',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      color: '#FFFFFF',
-      fontSize: 18,
-    },
-  },
-};
+
 function AppNavigation() {
   const navigationRef = useNavigationContainerRef();
   return (

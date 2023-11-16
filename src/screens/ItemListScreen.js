@@ -15,14 +15,14 @@ export default function ItemListScreen() {
   useEffect(() => {
     dispatch(request({url: kApiGetItems}));
 
-    ApiHelper.get(kApiGetItems)
-      .then(response => {
-        dispatch(success(response));
-        console.log('list screen==' + item.items);
-      })
-      .catch(error => {
-        dispatch(failure(error));
-      });
+    // ApiHelper.get(kApiGetItems)
+    // .then(response => {
+    // dispatch(success(response));
+    // console.log('list screen==' + item.items);
+    // })
+    // .catch(error => {
+    // dispatch(failure(error));
+    // });
   }, []);
 
   return (
