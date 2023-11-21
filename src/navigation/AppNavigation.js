@@ -22,7 +22,7 @@ function AppNavigation() {
   return (
     <NavigationContainer ref={navigationRef}>
       <Provider store={store}>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="itemlist">
           <Stack.Screen
             name="Home"
             options={{headerShown: true}}

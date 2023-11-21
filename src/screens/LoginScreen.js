@@ -15,6 +15,7 @@ import {kApiUserLogin} from '../config/WebService';
 import {useDispatch, useSelector} from 'react-redux';
 import {userActions} from '../features/user/userSlice';
 import styles from './styles';
+import analytics from '@react-native-firebase/analytics';
 
 const {request, success, failure} = userActions;
 
@@ -100,6 +101,17 @@ const LoginScreen = ({navigation}) => {
           onPress={() => {
             navigation.navigate('signup');
           }}
+        />
+        <Button
+          title="Add To Basket"
+          onPress={async () =>
+            await analytics().logEvent('basket', {
+              id: 3745092,
+              item: 'mens grey t-shirt',
+              description: ['round neck', 'long sleeved'],
+              size: 'L',
+            })
+          }
         />
         {user.isFetching && <ActivityIndicator />}
       </View>

@@ -10,7 +10,7 @@ const {request, success, failure} = itemActions;
 
 export default function ItemListScreen() {
   const dispatch = useDispatch();
-  const item = useSelector(state => state.items);
+  const item = useSelector(state => state.item);
 
   useEffect(() => {
     dispatch(request({url: kApiGetItems}));
