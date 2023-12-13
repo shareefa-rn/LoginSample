@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 class PersistanceHelper {
+  accessToken = undefined;
   setValue = (key, value) => {
     try {
       EncryptedStorage.setItem(key, value);

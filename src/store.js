@@ -3,7 +3,6 @@ import {createLogger} from 'redux-logger';
 
 import {combineReducers} from '@reduxjs/toolkit';
 import persistReducer from 'redux-persist/es/persistReducer';
-import storage from 'redux-persist/lib/storage';
 import persistStore from 'redux-persist/lib/persistStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import reducers from './features/reducers';

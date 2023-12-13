@@ -1,28 +1,26 @@
-import React, {useEffect} from 'react';
-import {View, Text, FlatList, SafeAreaView} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import ApiHelper from '../helpers/ApiHelper';
-import {kApiGetItems} from '../config/WebService';
-import {itemActions} from '../features/item/itemSlicer';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  SafeAreaView,
+  ActivityIndicator,
+} from 'react-native';
 import PostItemScreen from './PostItemScreen';
+import {useDispatch, useSelector} from 'react-redux';
+import {kApiGetItems} from '../config/WebService';
+import itemSlice, {itemActions} from '../features/item/itemSlice';
 
 const {request, success, failure} = itemActions;
 
 export default function ItemListScreen() {
+  const [data, setData] = useState([]);
+
   const dispatch = useDispatch();
-  const item = useSelector(state => state.items);
+  const item = useSelector(state => state.item);
 
   useEffect(() => {
     dispatch(request({url: kApiGetItems}));
-
-    // ApiHelper.get(kApiGetItems)
-    // .then(response => {
-    // dispatch(success(response));
-    // console.log('list screen==' + item.items);
-    // })
-    // .catch(error => {
-    // dispatch(failure(error));
-    // });
   }, []);
 
   return (
@@ -50,13 +48,14 @@ export default function ItemListScreen() {
                     justifyContent: 'space-between',
                   }}>
                   <Text>{item.title}</Text>
-                  <Text>{item.details}</Text>
+                  <Text>{item.title}</Text>
                 </View>
-                <Text>{item.image}</Text>
+                <Text>{item.title}</Text>
               </View>
             );
           }}
         />
+        {item.isFetching && <ActivityIndicator />}
       </View>
       <View
         style={{

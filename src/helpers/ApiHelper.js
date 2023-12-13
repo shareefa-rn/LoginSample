@@ -7,7 +7,6 @@ import {
 class ApiHelper {
   get = async (url, data, headers) => {
     url = kApiUrlEndpoint + url;
-    console.log('item url==' + url);
 
     const response = await fetch(url).then(x => x.json());
 
@@ -18,7 +17,6 @@ class ApiHelper {
 
   post = async (url, data, headers = {}) => {
     url = kApiUrlEndpoint + url;
-    console.log('Api helper to login==' + url + '==' + data.email);
 
     const response = await fetch(url, {
       method: 'POST',

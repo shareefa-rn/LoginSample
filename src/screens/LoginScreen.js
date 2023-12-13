@@ -8,44 +8,20 @@ import {
   Button,
   ActivityIndicator,
 } from 'react-native';
-import {useAuthHelper} from '../contextApi/AuthHelper';
-import {EventRegister} from 'react-native-event-listeners';
-import ApiHelper from '../helpers/ApiHelper';
-import {kApiUserLogin} from '../config/WebService';
+import styles from '../styles';
 import {useDispatch, useSelector} from 'react-redux';
+import {kApiUserLogin} from '../config/WebService';
 import {userActions} from '../features/user/userSlice';
-import styles from './styles';
+import Colors from '../Colors';
 
 const {request, success, failure} = userActions;
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = props => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const {login} = useAuthHelper();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
   const user = useSelector(state => state.user);
 
-  const loginUser = () => {
-    //  setLoading(true);
-    setTimeout(async () => {
-      //  setLoading(false);
-      console.log('inputs====>', credentials);
-
-      try {
-        setInputs({
-          email: '',
-          password: '',
-        });
-        //  setErrors({});
-        console.log('navigating to home');
-      } catch (error) {
-        console.log('Error to home');
-
-        Alert.alert('Error', 'Invalid Details');
-      }
-    }, 3000);
-  };
   return (
     <SafeAreaView
       style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
@@ -67,41 +43,29 @@ const LoginScreen = ({navigation}) => {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={async () => {
-            //  login(email, password);
-            //   EventRegister.emit('loginEvent');
-            //   navigation.navigate('Redux');
-            //  Alert.alert(`User ${userName} is log in with password ${password}`);
-            // PersistanceHelper.setObject('loginDetails', {username, password});
-            dispatch(request({email, password}));
-            console.log('navigating to login==' + email + password);
+          onPress={() => {
+            dispatch(
+              request({
+                url: kApiUserLogin,
+                data: {email, password},
+                requestType: 'POST',
+              }),
+            );
 
-            try {
-              const response = await ApiHelper.post(kApiUserLogin, {
-                email,
-                password,
-              });
-              dispatch(success(response));
-              setEmail('');
-              setPassword('');
-              navigation.navigate('itemlist');
-
-              console.log('Api helper to success==' + response.success);
-            } catch (error) {
-              console.log('Api helper to error==' + error);
-
-              dispatch(failure(error));
-            }
+            setEmail('');
+            setPassword('');
           }}>
           <Text style={styles.text}>Login</Text>
         </TouchableOpacity>
         <Button
           title="Goto Signup"
           onPress={() => {
-            navigation.navigate('signup');
+            props.navigation.navigate('signup');
           }}
         />
-        {user.isFetching && <ActivityIndicator />}
+        {user.isFetching && (
+          <ActivityIndicator size="large" color={Colors.green} />
+        )}
       </View>
     </SafeAreaView>
   );

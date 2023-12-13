@@ -1,13 +1,7 @@
-import counterSlice from './counter/counterSlice';
-import cartSlice from './cart/cartSlice';
-import userSlice from './user/userSlice';
-import itemSlicer from './item/itemSlicer';
+import item from './item/itemSlice';
+import user from './user/userSlice';
 
 export default {
-  reducer: {
-    counter: counterSlice,
-    cart: cartSlice,
-    user: userSlice,
-    items: itemSlicer,
-  },
+  item: item,
+  user: user,
 };

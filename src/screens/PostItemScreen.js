@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,22 +6,21 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import styles from './styles';
+import styles from '../styles';
 import {kApiPostItems} from '../config/WebService';
 import {useDispatch, useSelector} from 'react-redux';
-import {itemActions} from '../features/item/itemSlicer';
-import ApiHelper from '../helpers/ApiHelper';
+import {itemActions} from '../features/item/itemSlice';
+import {PersistanceHelper} from '../helpers';
 
 const {request, success, failure, addItem} = itemActions;
 
 export default function PostItemScreen() {
-  const dispatch = useDispatch();
-
-  const user = useSelector(state => state.user);
-
   const [title, setTitle] = useState();
   const [image, setImage] = useState();
   const [details, setDetails] = useState();
+  const user = useSelector(state => state.user);
+
+  const dispatch = useDispatch();
 
   return (
     <SafeAreaView>
@@ -46,24 +45,19 @@ export default function PostItemScreen() {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={async () => {
-            dispatch(request());
-            try {
-              const response = await ApiHelper.post(
-                kApiPostItems,
-                {title, image, details},
-                {'X-Access-Token': user?.data?.accessToken},
-              );
-              dispatch(success(response));
-              setTitle('');
-              setImage('');
-              setDetails('');
-              console.log('Api helper to success==' + response.success);
-            } catch (error) {
-              console.log('Api helper to error==' + error);
+          onPress={() => {
+            dispatch(
+              request({
+                url: kApiPostItems,
+                data: {title, image, details},
+                header: {'X-Access-Token': PersistanceHelper.accessToken},
+                requestType: 'POST',
+              }),
+            );
 
-              dispatch(failure(error));
-            }
+            setTitle('');
+            setImage('');
+            setDetails('');
           }}>
           <Text style={styles.text}>Post Data</Text>
         </TouchableOpacity>

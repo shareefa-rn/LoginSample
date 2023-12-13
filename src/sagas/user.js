@@ -1,7 +1,7 @@
 import {take, put, call, fork} from 'redux-saga/effects';
 
 import {userActions} from '../features/user/userSlice';
-import {ApiHelper} from '../helpers';
+import ApiHelper from '../helpers/ApiHelper';
 
 const {request, success, failure} = userActions;
 

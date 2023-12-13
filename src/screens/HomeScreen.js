@@ -8,7 +8,7 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import styles from './styles';
+import styles from '../styles';
 import {EventRegister} from 'react-native-event-listeners';
 import {useNavigation} from '@react-navigation/native';
 import {StackActions} from '@react-navigation/native';

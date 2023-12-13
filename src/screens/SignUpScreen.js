@@ -7,30 +7,17 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import styles from './styles';
-import {kApiUserLogin, kApiUserSignup} from '../config/WebService';
-import {useDispatch, useSelector} from 'react-redux';
-import ApiHelper from '../helpers/ApiHelper';
+import styles from '../styles';
 import {userActions} from '../features/user/userSlice';
+import {useDispatch} from 'react-redux';
+import {kApiUserSignup} from '../config/WebService';
 
 const {request, success, failure} = userActions;
 
 export default function SignUpScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-  const [errorMsg, setErrorMsg] = useState(undefined);
-  const user = useSelector(state => state.user);
-
-  useEffect(() => {
-    if (user?.errorMessage?.message) {
-      //  Alert.alert('Error', user?.errorMessage?.message);
-      setErrorMsg(user?.errorMessage?.message);
-    } else {
-      setErrorMsg(undefined);
-    }
-  }, [user]);
 
   return (
     <SafeAreaView
@@ -51,30 +38,19 @@ export default function SignUpScreen() {
             style={styles.input}
             onChangeText={ct => setPassword(ct)}></TextInput>
         </View>
-        {errorMsg && errorMsg.length > 0 && (
-          <Text style={{color: 'red', marginHorizontal: 20}}>{errorMsg}</Text>
-        )}
+
         <TouchableOpacity
           style={styles.button}
-          onPress={async () => {
-            dispatch(request({email, password}));
-            console.log('navigating to login==' + email + password);
-            try {
-              const response = await ApiHelper.post(kApiUserSignup, {
-                email,
-                password,
-              });
-              dispatch(success(response));
-              setEmail('');
-              setPassword('');
-              Alert.alert('Successfully signup');
-              console.log('Api helper to success==' + response.success);
-            } catch (error) {
-              console.log('Api helper to error==' + error.error);
-              // Alert.alert('' + errorMsg);
-
-              dispatch(failure(error));
-            }
+          onPress={() => {
+            dispatch(
+              request({
+                url: kApiUserSignup,
+                data: {email, password},
+                requestType: 'POST',
+              }),
+            );
+            setEmail('');
+            setPassword('');
           }}>
           <Text style={styles.text}>Signup</Text>
         </TouchableOpacity>

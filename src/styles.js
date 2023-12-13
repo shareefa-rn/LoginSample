@@ -1,6 +1,14 @@
 import {StyleSheet} from 'react-native';
+import Colors from './Colors';
 
 export default StyleSheet.create({
+  iconSize: {
+    fontSize: 30,
+  },
+  errorStyle: {
+    marginHorizontal: 10,
+    color: 'red',
+  },
   input: {
     height: 40,
     borderColor: '#e0e0e0',
@@ -72,5 +80,30 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  logo: {
+    width: 66,
+    height: 58,
+    borderRadius: 400 / 2,
+  },
+  textHeadingStyle: {
+    marginTop: 30,
+    fontSize: 40,
+    color: '#0250a3',
+    fontWeight: 'bold',
+  },
+  profileContainer: {
+    flex: 0.8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgContainer: {},
+
+  image: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    borderColor: Colors.black,
+    borderWidth: 3,
   },
 });
