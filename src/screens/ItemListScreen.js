@@ -5,13 +5,14 @@ import {
   FlatList,
   SafeAreaView,
   ActivityIndicator,
+  Button,
 } from 'react-native';
 import PostItemScreen from './PostItemScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {kApiGetItems} from '../config/WebService';
-import itemSlice, {itemActions} from '../features/item/itemSlice';
+import {itemActions} from '../features/item/itemSlice';
 
-const {request, success, failure} = itemActions;
+const {request, requestLatest, requestEvery, success, failure} = itemActions;
 
 export default function ItemListScreen() {
   const [data, setData] = useState([]);
@@ -61,6 +62,18 @@ export default function ItemListScreen() {
         style={{
           height: 240,
         }}>
+        <Button
+          title="Take Every"
+          onPress={() => {
+            dispatch(requestEvery({url: kApiGetItems}));
+          }}
+        />
+        <Button
+          title="Take Latest"
+          onPress={() => {
+            dispatch(requestLatest({url: kApiGetItems}));
+          }}
+        />
         <PostItemScreen />
       </View>
     </SafeAreaView>

@@ -9,9 +9,16 @@ const itemSlice = createSlice({
     request: state => {
       state.isFetching = true;
     },
+    requestEvery: state => {
+      state.isFetching = true;
+    },
+    requestLatest: state => {
+      state.isFetching = true;
+    },
     success: (state, action) => {
       state.isFetching = false;
 
+      //after posting item itemlist has been added with newly added item
       if (Array.isArray(action.payload)) {
         state.items = action.payload;
       } else {
