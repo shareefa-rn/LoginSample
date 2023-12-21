@@ -24,16 +24,24 @@ const userSlice = createSlice({
 
       state.isFetching = false;
       state.failure = false;
+      state.success = true;
+      state.successMessage = action.payload;
       state.errorMessage = {};
     },
     failure: (state, action) => {
       state.isFetching = false;
       state.failure = true;
+      state.success = false;
       state.errorMessage = action.payload;
     },
-    logout: (state, actions) => {
-      state.data = {};
-      PersistanceHelper.accessToken = undefined;
+    logout: (state, action) => {
+      PersistanceHelper.setValue('AT', '');
+
+      state.isFetching = false;
+      state.failure = true;
+      //     PersistanceHelper.setValue('AT', null); // Set the access token to undefined
+      // Optionally, clear the entire key related to the access token
+      //    PersistanceHelper.clearKey('AT');
     },
   },
 });

@@ -1,10 +1,10 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
+//import EncryptedStorage from 'react-native-encrypted-storage';
 
 class PersistanceHelper {
   accessToken = undefined;
   setValue = (key, value) => {
     try {
-      EncryptedStorage.setItem(key, value);
+      //   EncryptedStorage.setItem(key, value);
 
       console.log('written successfully');
     } catch (e) {
@@ -14,9 +14,8 @@ class PersistanceHelper {
 
   getValue = async (key, success, failure) => {
     try {
-      const value = await EncryptedStorage.getItem(key);
-
-      return value;
+      //   const value = await EncryptedStorage.getItem(key);
+      //   return value;
     } catch (ex) {
       console.log(ex);
     }

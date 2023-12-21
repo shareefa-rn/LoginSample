@@ -8,12 +8,14 @@ import SignUpScreen from '../screens/SignUpScreen';
 import {Button, TouchableOpacity, View} from 'react-native';
 import PersistanceHelper from '../helpers/PersistanceHelper';
 import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../features/user/userSlice';
 import styles from '../styles';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import MaterialIconsSimple from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIconsCom from 'react-native-vector-icons/MaterialCommunityIcons';
+import {userActions} from '../features/user/userSlice';
 const Stack = createNativeStackNavigator();
+
+const {request, success, failure, logout} = userActions;
 
 const Navigator = () => {
   const user = useSelector(state => state.user);
@@ -87,7 +89,10 @@ const Navigator = () => {
                 <Button
                   title="logout"
                   onPress={() => {
-                    dispatch(logout);
+                    dispatch(logout());
+                    // Clear the login state after processing
+                    //  dispatch(logout(false));
+                    // dispatch(failure(false));
                   }}
                 />
               </View>
