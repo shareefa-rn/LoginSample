@@ -7,7 +7,7 @@ branches: [ master ]
 
 jobs:
 build:
-uuns-on : macOS 
+runs-on : macOS 
 steps:
  - name: Checkout
   uses: actions/checkout@v4.1.1
