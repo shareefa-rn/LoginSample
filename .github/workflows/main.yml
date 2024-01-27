@@ -1,6 +1,5 @@
 name: AndroidBuild
 on:
-//Event or action points//
 pull_request:
 branches : [master]
 push:
@@ -8,19 +7,16 @@ branches: [master]
 
 bobs:
 build:
-uuns-on : macOS //os like Mac windows ubuntu
+uuns-on : macOS 
 steps:
-//actions
-//Prebuilt actions we are using here from giuhub page 
  - name: Checkout
   uses: actions/checkout@v4.1.1
 
-//setup java jdk
     - name: Setup Java JDK
   uses: actions/setup-java@v4.0.0
 
     - name: Build with grade
-  Run: ./gradlew build
+  run: ./gradlew build
 
  - name: Upload a Build Artifact
   uses: actions/upload-artifact@v4.3.0
